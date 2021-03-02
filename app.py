@@ -43,15 +43,10 @@ def get_letter_for_units(units):
 @app.route('/results')
 def results():
     """Displays results for current weather conditions."""
-    # TODO: Use 'request.args' to retrieve the city & units from the query
-    # parameters.
     city = request.args.get('city')
     units = request.args.get('units')
 
     params = {
-        # TODO: Enter query parameters here for the 'appid' (your api key),
-        # the city, and the units (metric or imperial).
-        # See the documentation here: https://openweathermap.org/current
         'q': city,
         'appid': '8dc260bebb36d0633ea80322c7425314',
         'units': 'imperial'
@@ -60,16 +55,6 @@ def results():
 
     result_json = requests.get(API_URL, params=params).json()
 
-    # Uncomment the line below to see the results of the API call!
-    pp.pprint(result_json)
-    print(result_json)
-
-    # TODO: Replace the empty variables below with their appropriate values.
-    # You'll need to retrieve these from the result_json object above.
-
-    # For the sunrise & sunset variables, I would recommend to turn them into
-    # datetime objects. You can do so using the `datetime.fromtimestamp()` 
-    # function.
     context = {
         'date': datetime.now(),
         'city': city,
@@ -99,23 +84,13 @@ def helper_function(city, units):
 @app.route('/comparison_results')
 def comparison_results():
     """Displays the relative weather for 2 different cities."""
-    # TODO: Use 'request.args' to retrieve the cities & units from the query
-    # parameters.
     city1 = request.args.get('city1')
     city2 = request.args.get('city2')
     units = request.args.get('units')
 
-    # TODO: Make 2 API calls, one for each city. HINT: You may want to write a 
-    # helper function for this!
-
     city1_results = helper_function(city1, units)
     city2_results = helper_function(city2, units)
 
-
-    # TODO: Pass the information for both cities in the context. Make sure to
-    # pass info for the temperature, humidity, wind speed, and sunset time!
-    # HINT: It may be useful to create 2 new dictionaries, `city1_info` and 
-    # `city2_info`, to organize the data.
     city_info = {
         'date': datetime.now(),
         'units_letter': get_letter_for_units(units),
